@@ -1,5 +1,9 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import MetaData from "../layout/MetaData";
-import { useEffect, useState } from "react";
 import {
     fetchClassRooms,
     fetchCourses,
@@ -7,10 +11,6 @@ import {
     fetchFaculties,
     fetchSemesterData
 } from "../utils/fetchData";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const OfferCourses = ({ isSidebarClosed }) => {
     const [semesters, setSemesters] = useState([]);
@@ -18,79 +18,11 @@ const OfferCourses = ({ isSidebarClosed }) => {
     const [courses, setCourses] = useState([]);
     const [faculties, setFaculties] = useState([]);
     const [classrooms, setClassrooms] = useState([]);
-    const [selectedDepartment, setSelectedDepartment] = useState('')
-    const [selectedSemester, setSelectedSemester] = useState('')
+    const [selectedDepartment, setSelectedDepartment] = useState('');
+    const [selectedSemester, setSelectedSemester] = useState('');
     const [isConflict, setIsConflict] = useState(false);
-    const [offerCourses, setOfferCourses] = useState([{
-        classRoom: "",
-        labRoom: "",
-        facultyName: "",
-        courseName: "",
-        seat: '',
-        section: '',
-        classTime: "",
-        labTime: ""
-    }]);
-    const fetchInitialData = async () => {
-        try {
-            const SemesterResponse = await fetchSemesterData();
-            if (SemesterResponse && Array.isArray(SemesterResponse.semester)) {
-                setSemesters(SemesterResponse.semester);
-            } else {
-                console.error("Semester data is not in the expected format", SemesterResponse);
-            }
-
-            const departmentResponse = await fetchDepartmentData();
-            if (departmentResponse && Array.isArray(departmentResponse.department)) {
-                setDepartments(departmentResponse.department)
-            }
-            else {
-                console.error("Department data is not in the expected format", departmentResponse);
-            }
-
-            const classroomResponse = await fetchClassRooms();
-            if (classroomResponse && Array.isArray(classroomResponse.classrooms)) {
-                setClassrooms(classroomResponse.classrooms)
-            }
-            else {
-                console.error("Classroom data is not in the expected format", classroomResponse);
-            }
-
-            if (selectedDepartment) {
-                const courseResponse = await fetchCourses(selectedDepartment);
-                if (courseResponse && Array.isArray(courseResponse.courses)) {
-                    setCourses(courseResponse.courses)
-                }
-                else {
-                    console.error("Course data is not in the expected format", courseResponse);
-                }
-
-                const facultyResponse = await fetchFaculties(selectedDepartment);
-                if (facultyResponse && Array.isArray(facultyResponse.faculties)) {
-                    setFaculties(facultyResponse.faculties)
-                }
-                else {
-                    console.error("Faculty data is not in the expected format", facultyResponse);
-                }
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    useEffect(() => {
-        fetchInitialData();
-    }, [selectedDepartment]);
-
-    const handelDepartmentChange = (e) => {
-        const department = e.target.value;
-        setSelectedDepartment(department);
-    }
-    const handelSemesterChange = (e) => {
-        const semester = e.target.value;
-        setSelectedSemester(semester);
-    }
-    const addCourse = () => {
-        setOfferCourses([...offerCourses, {
+    const [offerCourses, setOfferCourses] = useState([
+        {
             classRoom: "",
             labRoom: "",
             facultyName: "",
@@ -99,14 +31,70 @@ const OfferCourses = ({ isSidebarClosed }) => {
             section: '',
             classTime: "",
             labTime: ""
-        }])
-    }
-    const checkForConflicts = () => {
+        }
+    ]);
+
+    useEffect(() => {
+        fetchInitialData();
+    }, [selectedDepartment]);
+
+    const fetchInitialData = async () => {
+        try {
+            const semesterResponse = await fetchSemesterData();
+            if (semesterResponse && Array.isArray(semesterResponse.semester)) {
+                setSemesters(semesterResponse.semester);
+            } else {
+                console.error("Semester data is not in the expected format", semesterResponse);
+            }
+
+            const departmentResponse = await fetchDepartmentData();
+            if (departmentResponse && Array.isArray(departmentResponse.department)) {
+                setDepartments(departmentResponse.department);
+            } else {
+                console.error("Department data is not in the expected format", departmentResponse);
+            }
+
+            const classroomResponse = await fetchClassRooms();
+            if (classroomResponse && Array.isArray(classroomResponse.classrooms)) {
+                setClassrooms(classroomResponse.classrooms);
+            } else {
+                console.error("Classroom data is not in the expected format", classroomResponse);
+            }
+
+            if (selectedDepartment) {
+                const courseResponse = await fetchCourses(selectedDepartment);
+                if (courseResponse && Array.isArray(courseResponse.courses)) {
+                    setCourses(courseResponse.courses);
+                } else {
+                    console.error("Course data is not in the expected format", courseResponse);
+                }
+
+                const facultyResponse = await fetchFaculties(selectedDepartment);
+                if (facultyResponse && Array.isArray(facultyResponse.faculties)) {
+                    setFaculties(facultyResponse.faculties);
+                } else {
+                    console.error("Faculty data is not in the expected format", facultyResponse);
+                }
+            }
+        } catch (err) {
+            console.error('Error fetching initial data:', err);
+        }
+    };
+
+    const handleOfferCourseChange = (index, field, value) => {
+        const newOfferCourses = [...offerCourses];
+        newOfferCourses[index][field] = value;
+        setOfferCourses(newOfferCourses);
+        const hasConflict = checkForConflicts(newOfferCourses);
+        setIsConflict(hasConflict);
+    };
+
+    const checkForConflicts = (coursesToCheck) => {
         const roomSchedule = {};
         const facultySchedule = {};
         let conflictFound = false;
 
-        offerCourses?.forEach((course, index) => {
+        coursesToCheck?.forEach((course, index) => {
             const { classTime, labTime, classRoom, labRoom, facultyName, courseName, section } = course;
 
             // Check for class conflicts
@@ -148,7 +136,7 @@ const OfferCourses = ({ isSidebarClosed }) => {
                 }
             }
 
-            const sameCourseConflict = offerCourses.findIndex((otherCourse, otherIndex) => {
+            const sameCourseConflict = coursesToCheck.findIndex((otherCourse, otherIndex) => {
                 return otherIndex !== index && otherCourse.courseName === courseName && otherCourse.section === section;
             });
 
@@ -160,20 +148,33 @@ const OfferCourses = ({ isSidebarClosed }) => {
         return conflictFound;
     };
 
-
-    const handleOfferCourseChange = (index, field, value) => {
-        const newOfferCourses = [...offerCourses];
-        newOfferCourses[index][field] = value;
-        setOfferCourses(newOfferCourses);
-        const hasConflict = checkForConflicts(newOfferCourses);
-        setIsConflict(hasConflict);
+    const addCourse = () => {
+        setOfferCourses([...offerCourses, {
+            classRoom: "",
+            labRoom: "",
+            facultyName: "",
+            courseName: "",
+            seat: '',
+            section: '',
+            classTime: "",
+            labTime: ""
+        }]);
     };
-
 
     const removeCourse = (index) => {
         const newOfferCourses = [...offerCourses];
         newOfferCourses.splice(index, 1);
         setOfferCourses(newOfferCourses);
+    };
+
+    const handelDepartmentChange = (e) => {
+        const department = e.target.value;
+        setSelectedDepartment(department);
+    };
+
+    const handelSemesterChange = (e) => {
+        const semester = e.target.value;
+        setSelectedSemester(semester);
     };
 
     const handleSubmit = async (e) => {
@@ -185,12 +186,7 @@ const OfferCourses = ({ isSidebarClosed }) => {
         };
 
         try {
-            const response = await axios.post('http://localhost:4000/offer-course/save', dataToSend, {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
-            })
+            const response = await axios.post('https://cp-wine-mu.vercel.app/offer-course/save', dataToSend);
             console.log('Courses offered successfully:', response.data);
             toast.success("Courses offered successfully!");
         } catch (err) {
@@ -267,7 +263,7 @@ const OfferCourses = ({ isSidebarClosed }) => {
                                                         <select
                                                             value={course.courseName}
                                                             onChange={(e) => handleOfferCourseChange(index, 'courseName', e.target.value)}
-                                                            required={true}
+                                                            required
                                                         >
                                                             <option value="">Select</option>
                                                             {courses.map(c => (
@@ -282,11 +278,10 @@ const OfferCourses = ({ isSidebarClosed }) => {
                                                     <div className="input-field-offerCourses">
                                                         <input
                                                             type="text"
-                                                            placeholder="seat?"
+                                                            placeholder="Seat"
                                                             value={course.seat}
                                                             onChange={(e) => handleOfferCourseChange(index, 'seat', e.target.value)}
                                                             required
-                                                            autoComplete="off"
                                                         />
                                                     </div>
                                                 </td>
@@ -377,7 +372,7 @@ const OfferCourses = ({ isSidebarClosed }) => {
                                                         <select
                                                             value={course.facultyName}
                                                             onChange={(e) => handleOfferCourseChange(index, 'facultyName', e.target.value)}
-                                                            required={true}
+                                                            required
                                                         >
                                                             <option value="">Select</option>
                                                             {faculties.map(faculty => (
@@ -391,8 +386,7 @@ const OfferCourses = ({ isSidebarClosed }) => {
                                                 <td>
                                                     <div className='addAndRemoveButton'>
                                                         <FontAwesomeIcon icon={faCirclePlus} onClick={addCourse} disabled={isConflict} />
-                                                        <FontAwesomeIcon icon={faTrash}
-                                                            onClick={() => removeCourse(index)} disabled={isConflict} />
+                                                        <FontAwesomeIcon icon={faTrash} onClick={() => removeCourse(index)} disabled={isConflict} />
                                                     </div>
                                                 </td>
                                             </tr>
