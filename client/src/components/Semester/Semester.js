@@ -21,7 +21,7 @@ const Semester = ({ isSidebarClosed }) => {
         //const token = localStorage.getItem('token');
         e.preventDefault();
         axios
-            .post('http://localhost:4000/semester/save', semester, {
+            .post('https://cp-wine-mu.vercel.app/semester/save', semester, {
                 // headers: {
                 //     'Authorization': `Bearer ${token}`,
                 //     'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ const Semester = ({ isSidebarClosed }) => {
     const fetchSemesters = () => {
         const token = localStorage.getItem('token');
         axios
-            .get('http://localhost:4000/semester/all', {
+            .get('https://cp-wine-mu.vercel.app/semester/all', {
                 // headers: {
                 //     'Authorization': `Bearer ${token}`,
                 //     'Content-Type': 'application/json'
@@ -111,7 +111,7 @@ const Semester = ({ isSidebarClosed }) => {
     const handleDelete = async (id) => {
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:4000/semester/delete/${id}`, {
+            await axios.delete(`https://cp-wine-mu.vercel.app/semester/delete/${id}`, {
                 // headers: {
                 //     'Authorization': `Bearer ${token}`,
                 // }

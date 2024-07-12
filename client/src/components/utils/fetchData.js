@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 export const fetchDepartmentData = async () => {
     try {
-        const res = await axios.get('http://localhost:4000/department/all',
+        const res = await axios.get('https://cp-wine-mu.vercel.app/department/all',
             // {
             //     headers: {
             //         'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -19,7 +19,7 @@ export const fetchDepartmentData = async () => {
 export const fetchSemesterData = async () => {
     try {
         const res =
-            await axios.get('http://localhost:4000/semester/all', {
+            await axios.get('https://cp-wine-mu.vercel.app/semester/all', {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',

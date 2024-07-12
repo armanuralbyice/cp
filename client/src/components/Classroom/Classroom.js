@@ -21,7 +21,7 @@ const Classroom = ({ isSidebarClosed }) => {
     const handleSemesterSubmit = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:4000/classroom/save', classroom, {
+            .post('https://cp-wine-mu.vercel.app/classroom/save', classroom, {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const Classroom = ({ isSidebarClosed }) => {
     const displayedClassrooms = classrooms ? classrooms.slice(indexOfFirstItem, indexOfLastItem) : [];
     const fetchClassrooms = () => {
         axios
-            .get('http://localhost:4000/classroom/all', {
+            .get('https://cp-wine-mu.vercel.app/classroom/all', {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const Classroom = ({ isSidebarClosed }) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/classroom/delete/${id}`, {
+            await axios.delete(`https://cp-wine-mu.vercel.app/classroom/delete/${id}`, {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',

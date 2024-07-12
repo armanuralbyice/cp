@@ -41,7 +41,7 @@ const Student = ({ isSidebarClosed }) => {
     };
     const handelSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:4000/user/student/save', student, {
+        axios.post('https://cp-wine-mu.vercel.app/user/student/save', student, {
             // headers: {
             //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
             //     'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const Student = ({ isSidebarClosed }) => {
 
     const fetchDepartments = () => {
         axios
-            .get('http://localhost:4000/department/all', {
+            .get('https://cp-wine-mu.vercel.app/department/all', {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const Student = ({ isSidebarClosed }) => {
     }
     const fetchSemesters = () => {
         axios
-            .get('http://localhost:4000/semester/all', {
+            .get('https://cp-wine-mu.vercel.app/semester/all', {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',

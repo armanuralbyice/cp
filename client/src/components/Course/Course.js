@@ -18,7 +18,7 @@ const Course = ({ isSidebarClosed }) => {
     const handleCourseSubmit = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:4000/course/save', course, {
+            .post('https://cp-wine-mu.vercel.app/course/save', course, {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const Course = ({ isSidebarClosed }) => {
     const [departments, setDepartments] = useState([]);
     const fetchDepartments = () => {
         axios
-            .get('http://localhost:4000/department/all', {
+            .get('https://cp-wine-mu.vercel.app/department/all', {
                 // headers: {
                 //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'application/json',
@@ -58,10 +58,10 @@ const Course = ({ isSidebarClosed }) => {
 
     const [courses, setCourses] = useState([]);
     const fetchCourses = () => {
-        let url = 'http://localhost:4000/course/all';
+        let url = 'https://cp-wine-mu.vercel.app/course/all';
 
         if (selectedDepartment) {
-            url = `http://localhost:4000/course/filter?department=${selectedDepartment}`;
+            url = `https://cp-wine-mu.vercel.app/filter?department=${selectedDepartment}`;
         }
 
         axios

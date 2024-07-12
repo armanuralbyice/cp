@@ -24,7 +24,7 @@ const Department = ({ isSidebarClosed }) => {
         //const token = localStorage.getItem('token');
         try {
             axios
-                .post('http://localhost:4000/department/save', department, {
+                .post('https://cp-wine-mu.vercel.app/department/save', department, {
                     // headers: {
                     //     'Authorization': `Bearer ${token}`,
                     //     'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const Department = ({ isSidebarClosed }) => {
     const handleDelete = async (id) => {
         //const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:4000/department/delete/${id}`, {
+            await axios.delete(`https://cp-wine-mu.vercel.app/department/delete/${id}`, {
                 // headers: {
                 //     'Authorization': `Bearer ${token}`,
                 //     'Content-Type': 'application/json',
