@@ -8,6 +8,7 @@ import Semester from './components/Semester/Semester';
 import Classroom from './components/Classroom/Classroom';
 import Course from './components/Course/Course';
 import Student from './components/Registration/Student';
+import Faculty from './components/Registration/faculty';
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             <Route path="/classroom" element={<Classroom isSidebarClosed={isSidebarClosed} />} />
             <Route path="/course" element={<Course isSidebarClosed={isSidebarClosed} />} />
             <Route path="/student" element={<Student isSidebarClosed={isSidebarClosed} />} />
+            <Route path="/faculty" element={<Faculty isSidebarClosed={isSidebarClosed} />} />
           </Route>
         </Routes>
       </Router>
