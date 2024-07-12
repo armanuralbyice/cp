@@ -151,6 +151,7 @@ const Admin = ({ isSidebarClosed }) => {
                                             onChange={onChange}
                                             required
                                         >
+                                            <option>Select</option>
                                             {departments.map(department => (
                                                 <option key={department._id} value={department._id}>
                                                     {department.name}
