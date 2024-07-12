@@ -33,6 +33,7 @@ const OfferCourses = ({ isSidebarClosed }) => {
             labTime: ""
         }
     ]);
+    console.log(offerCourses);
 
     useEffect(() => {
         fetchInitialData();
@@ -186,9 +187,11 @@ const OfferCourses = ({ isSidebarClosed }) => {
         };
 
         try {
-            const response = await axios.post('https://cp-wine-mu.vercel.app/offer-course/save', dataToSend);
-            console.log('Courses offered successfully:', response.data);
-            toast.success("Courses offered successfully!");
+            console.log(dataToSend);
+            //const response = await axios.post('http://localhost:4000/offer-course/save', dataToSend);
+            // console.log('Courses offered successfully:', response.data);
+            // toast.success("Courses offered successfully!");
+
         } catch (err) {
             console.error('Error offering courses:', err);
             toast.error("Error offering courses!");
