@@ -107,8 +107,8 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                     <ul className={`sub-menu ${isSubMenuOpen['registration'] ? 'showMenu' : ''}`}>
                         <li><h2 className="link_name">Registration</h2></li>
                         <li><Link to="student">Student</Link></li>
-                        <li><Link to="faculty/registation">Faculty</Link></li>
-                        <li><Link to="admin/registation">Admin</Link></li>
+                        <li><Link to="faculty">Faculty</Link></li>
+                        <li><Link to="admin">Admin</Link></li>
                     </ul>
                 </li>
                 {/* </>
