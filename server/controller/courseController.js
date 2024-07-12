@@ -1,5 +1,5 @@
 const Course = require('../model/courseSchema')
-const ErrorHandler = require('../utlis/ErrorHandler')
+const ErrorHandler = require('../utils/ErrorHandler')
 const catchAsync = require('../middleware/catchAsyncError')
 const Department = require("../model/departmentSchema");
 

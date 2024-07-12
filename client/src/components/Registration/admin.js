@@ -212,6 +212,7 @@ const Admin = ({ isSidebarClosed }) => {
                                             value={admin.address.presentAddress.postCode}
                                             onChange={onChange}
                                             required
+                                            autoComplete='off'
                                         />
                                     </div>
                                 </div>

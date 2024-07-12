@@ -1,5 +1,5 @@
 const catchAsyncError = require('../middleware/catchAsyncError')
-const ErrorHandler = require('../utlis/ErrorHandler')
+const ErrorHandler = require('../utils/ErrorHandler')
 const { addAdminAndSendEmail } = require("../middleware/sendEmail");
 const Admin = require("../model/adminSchema");
 

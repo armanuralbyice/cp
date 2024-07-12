@@ -1,6 +1,6 @@
 const Semester = require('../model/semesterSchema')
 const catchAsyncError = require('../middleware/catchAsyncError')
-const ErrorHandler = require('../utlis/ErrorHandler')
+const ErrorHandler = require('../utils/ErrorHandler')
 
 // save semester
 exports.saveSemester = catchAsyncError(async (req, res, next) => {

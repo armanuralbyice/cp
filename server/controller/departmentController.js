@@ -1,6 +1,6 @@
 const Department = require('../model/departmentSchema')
 const catchAsyncError = require('../middleware/catchAsyncError')
-const ErrorHandler = require('../utlis/ErrorHandler')
+const ErrorHandler = require('../utils/ErrorHandler')
 
 // save department
 exports.saveDepartment = catchAsyncError(async (req, res, next) => {

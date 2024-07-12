@@ -1,6 +1,6 @@
 
 const Classroom = require("../model/classroomSchema");
-const ErrorHandler = require("../utlis/ErrorHandler");
+const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 
 // save classroom
@@ -9,7 +9,7 @@ exports.saveClassroom = catchAsyncError(async (req, res, next) => {
     const { building, classroomNo } = req.body;
     const classroomExists = await Classroom.findOne({ classroomNo: classroomNo, building: building });
     if (classroomExists) {
-        return next(new ErrorHandler('Room already exists', 404));
+        return next(new ErrorHandler('Room already exists', 409));
     }
     const classroom = await Classroom.create(req.body)
     res.status(201).json({

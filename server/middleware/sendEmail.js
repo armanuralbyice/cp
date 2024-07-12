@@ -4,7 +4,7 @@ const Student = require('../model/studentSchema');
 const Faculty = require('../model/facultySchema');
 const Admin = require('../model/adminSchema');
 const Department = require('../model/departmentSchema');
-const ErrorHandler = require('../utlis/ErrorHandler');
+const ErrorHandler = require('../utils/ErrorHandler');
 
 const sendEmail = async (to, subject, html) => {
     try {

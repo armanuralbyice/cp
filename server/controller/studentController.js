@@ -1,7 +1,7 @@
 const Student = require('../model/studentSchema')
 const Department = require('../model/departmentSchema')
 const catchAsyncError = require('../middleware/catchAsyncError')
-const ErrorHandler = require('../utlis/ErrorHandler')
+const ErrorHandler = require('../utils/ErrorHandler')
 const { addStudentAndSendEmail } = require("../middleware/sendEmail");
 
 // save student
