@@ -51,7 +51,7 @@ const OfferCoursesGrid = ({ isSidebarClosed }) => {
         const semester = e.target.value;
         setSemesterId(semester);
     };
-
+    console.log(offerCourses);
     const handleDeleteCourse = async (courseId) => {
         try {
             const response = await axios.delete(`https://cp-wine-mu.vercel.app/offer-course/delete?semesterId=${semesterId}&departmentId=${departmentId}&courseId=${courseId}`, {
