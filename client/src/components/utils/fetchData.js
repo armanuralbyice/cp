@@ -73,3 +73,17 @@ export const fetchFaculties = async (selectedDepartment) => {
         return []
     }
 }
+export const fetchOfferCourses = async (semesterId, departmentId) => {
+    try {
+        const res = await axios.get(`http://localhost:4000/offer-course/all?semesterId=${semesterId}&departmentId=${departmentId}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        })
+        return res.data
+    } catch (err) {
+        console.log(err)
+        return []
+    }
+}

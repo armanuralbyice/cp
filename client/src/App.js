@@ -11,6 +11,7 @@ import Student from './components/Registration/Student';
 import Faculty from './components/Registration/faculty';
 import Admin from './components/Registration/admin';
 import OfferCourses from './components/offerCourse/offerCourse';
+import OfferCoursesGrid from './components/offerCourse/offerCoursesGrid';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route path="/faculty" element={<Faculty isSidebarClosed={isSidebarClosed} />} />
             <Route path="/admin" element={<Admin isSidebarClosed={isSidebarClosed} />} />
             <Route path="/offer-course" element={<OfferCourses isSidebarClosed={isSidebarClosed} />} />
+            <Route path="/offer-course/list" element={<OfferCoursesGrid isSidebarClosed={isSidebarClosed} />} />
           </Route>
         </Routes>
       </Router>
