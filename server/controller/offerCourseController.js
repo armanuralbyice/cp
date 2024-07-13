@@ -80,7 +80,7 @@ exports.deleteOfferCourse = catchAsyncError(async (req, res, next) => {
     const { departmentId, semesterId, courseId } = req.query;
 
     try {
-        const updatedOfferCourseDetails = await OfferCourseDetails.findOneAndUpdate(
+        await OfferCourseDetails.findOneAndUpdate(
             {
                 semester: semesterId,
                 department: departmentId
@@ -90,18 +90,6 @@ exports.deleteOfferCourse = catchAsyncError(async (req, res, next) => {
             },
             { new: true }
         );
-
-        if (updatedOfferCourseDetails) {
-            const deletedOfferCourse = await OfferCourse.findByIdAndDelete(courseId)
-
-            if (!deletedOfferCourse) {
-                return next(new ErrorHandler(`No OfferCourse document found with ID: ${courseId}`, 200))
-            }
-        }
-        else {
-            console.log(`No OfferCourseDetails document found for department ${departmentId} and semester ${semesterId}`);
-        }
-
         res.status(200).json({
             status: 'success',
             message: 'Delete successfully'
