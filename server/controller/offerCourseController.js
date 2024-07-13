@@ -80,25 +80,26 @@ exports.deleteOfferCourse = catchAsyncError(async (req, res, next) => {
     const { departmentId, semesterId, courseId } = req.query;
 
     try {
-        await OfferCourseDetails.findOneAndUpdate(
+        const updatedOfferCourseDetails = await OfferCourseDetails.findOneAndUpdate(
             {
                 semester: semesterId,
                 department: departmentId
             },
             {
-                $pull: { courses: courseId }
+                $pull: { courses: { _id: courseId } }
             },
             { new: true }
         );
+
+        if (!updatedOfferCourseDetails) {
+            return next(new ErrorHandler('No course found to delete', 404));
+        }
+
         res.status(200).json({
             status: 'success',
-            message: 'Delete successfully'
+            message: 'Course deleted successfully'
         });
     } catch (error) {
-        console.error('Error deleting offer course:', error);
-        res.status(500).json({
-            status: 'error',
-            message: 'An error occurred while deleting the offer course'
-        });
+        return next(new ErrorHandler('Internal Server Error', 500))
     }
 });
