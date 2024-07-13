@@ -24,8 +24,8 @@ const User = ({ isSidebarClosed }) => {
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const fetchUsers = (department) => {
         let url = `https://cp-wine-mu.vercel.app/user/${selectedCategory}/all`;
-        if (department) {
-            url = `https://cp-wine-mu.vercel.app/user/${department}/${selectedCategory}`;
+        if (selectedDepartment) {
+            url = `https://cp-wine-mu.vercel.app/user/${selectedDepartment}/${selectedCategory}`;
         }
 
         axios.get(url, {

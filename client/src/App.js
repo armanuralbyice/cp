@@ -13,6 +13,8 @@ import Admin from './components/Registration/admin';
 import OfferCourses from './components/offerCourse/offerCourse';
 import OfferCoursesGrid from './components/offerCourse/offerCoursesGrid';
 import User from './components/User/User';
+import Login from './components/auth/Login';
+import PrivateRoute from './components/Router/PrivateRouter';
 
 
 function App() {
@@ -35,15 +37,15 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          {/* <Route path="/login" element={<Login />} /> */}
-          <Route element={(<><Sidebar
+          <Route path="/login" element={<Login />} />
+          <Route element={(<PrivateRoute><Sidebar
             toggleSubMenu={toggleSubMenu}
             toggleSidebar={toggleSidebar}
             handleDropdownClick={handleDropdownClick}
             isSubMenuOpen={isSubMenuOpen}
             isSidebarClosed={isSidebarClosed}
-          /><Outlet /></>)}>
-            <Route path="/dashboard" element={<><Home isSidebarClosed={isSidebarClosed} /></>} />
+          /><Outlet /></PrivateRoute>)}>
+            <Route path="/home" element={<PrivateRoute><Home isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
             <Route path="/department" element={<Department isSidebarClosed={isSidebarClosed} />} />
             <Route path="/semester" element={<Semester isSidebarClosed={isSidebarClosed} />} />
             <Route path="/classroom" element={<Classroom isSidebarClosed={isSidebarClosed} />} />
