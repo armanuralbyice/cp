@@ -7,7 +7,7 @@ const router = express.Router();
 // router.use(authenticateRegister)
 // router.use(authorizeRegisterRoles)
 router.route('/faculty/save').post(saveFaculty)
-router.route('/department/:departmentId/faculties').get(getFacultiesByDepartment)
+router.route('/:departmentId/faculties').get(getFacultiesByDepartment)
 router.route('/faculties/all').get(getAllFaculties)
 router.route('/faculty/:facultyID').get(getFacultyByID)
 

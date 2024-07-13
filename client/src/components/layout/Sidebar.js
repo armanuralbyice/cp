@@ -79,7 +79,7 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         <li><Link to="department">Department</Link></li>
                         <li><Link to="classroom">ClassRoom</Link></li>
                         <li><Link to="course">Course</Link></li>
-                        <li><Link to="create/offerCourse">Offer Course</Link></li>
+                        <li><Link to="offer-course">Offer Course</Link></li>
                     </ul>
                 </li>
                 {/* </>
@@ -124,7 +124,7 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                     </Link>
                     <ul className="sub-menu blank">
                         <li>
-                            <Link to='showOfferCourses' className="link_name">
+                            <Link to='offer-course/list' className="link_name">
                                 Offer Courses
                             </Link>
                         </li>
@@ -177,13 +177,13 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                             userRole === 'admin' && (
                                 <> */}
                 <li>
-                    <Link to='/users'>
+                    <Link to='users'>
                         <i><FontAwesomeIcon icon={faUsersGear} /></i>
                         <span className="link_name">Users</span>
                     </Link>
                     <ul className="sub-menu blank">
                         <li>
-                            <Link to='/users' className="link_name">
+                            <Link to='users' className="link_name">
                                 Users
                             </Link>
                         </li>
