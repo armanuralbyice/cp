@@ -13,7 +13,7 @@ import Admin from './components/Registration/admin';
 import OfferCourses from './components/offerCourse/offerCourse';
 import OfferCoursesGrid from './components/offerCourse/offerCoursesGrid';
 import User from './components/User/User';
-import Login from './components/auth/Login';
+import Login from './components/Auth/Login';
 import PrivateRoute from './components/Router/PrivateRouter';
 
 

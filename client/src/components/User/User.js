@@ -22,7 +22,7 @@ const User = ({ isSidebarClosed }) => {
     const [selectedCategory, setSelectedCategory] = useState('students');
     const [allData, setAllData] = useState({ student: [], faculty: [], admin: [] });
     const [selectedDepartment, setSelectedDepartment] = useState('');
-    const fetchUsers = (department) => {
+    const fetchUsers = (selectedDepartment) => {
         let url = `https://cp-wine-mu.vercel.app/user/${selectedCategory}/all`;
         if (selectedDepartment) {
             url = `https://cp-wine-mu.vercel.app/user/${selectedDepartment}/${selectedCategory}`;
