@@ -61,7 +61,10 @@ exports.getOfferCourses = catchAsyncError(async (req, res, next) => {
     const offerCourseDetails = await OfferCourseDetails.findOne({
         semester: semesterId,
         department: departmentId
-    })
+    }).populate('courses.classRoom')
+        .populate('courses.labRoom')
+        .populate('courses.facultyName')
+        .populate('courses.courseName');
     if (!offerCourseDetails) {
         return next(new ErrorHandler('No course details found for the specified semester and department', 404));
     }
