@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/layout/Sidebar";
-import BounceLoader from "react-spinners/BounceLoader ";
+import BounceLoader from "react-spinners/BounceLoader";
 import { useEffect, useState } from "react";
 import Home from "./components/Home/Home";
 import Department from './components/Department/Department';
