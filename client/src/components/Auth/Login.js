@@ -36,15 +36,12 @@ const Login = () => {
                     }
                 })
         } catch (error) {
-            console.error('Login error:', error);
             if (error.response) {
                 console.error('Response data:', error.response.data);
             }
             setError('Invalid email or password');
         }
     };
-
-
     return (
         <div style={{ overflow: 'hidden', height: '100vh' }}>
             <div className="container-login">
