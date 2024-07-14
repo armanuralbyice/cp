@@ -7,6 +7,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from '../layout/Loader'
 
 const Course = ({ isSidebarClosed }) => {
     const [course, setCourse] = useState({
@@ -113,6 +114,7 @@ const Course = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Create Course'} />
             <div className="home-content">
+                <Loader size={100} color="#68C9EA" timeout={5000} />
                 <div className='title'>
                     <h2>Create Course</h2>
                 </div>

@@ -5,7 +5,7 @@ import { fetchDepartmentData, fetchOfferCourses, fetchSemesterData } from "../ut
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-
+import Loader from '../layout/Loader'
 const OfferCoursesGrid = ({ isSidebarClosed }) => {
     const [semesters, setSemesters] = useState([]);
     const [departments, setDepartments] = useState([]);
@@ -80,7 +80,7 @@ const OfferCoursesGrid = ({ isSidebarClosed }) => {
     return (
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Offer Courses'} />
-
+            <Loader size={100} color="#68C9EA" timeout={5000} />
             <div className='title'>
                 <h2>Show Offer Courses</h2>
             </div>

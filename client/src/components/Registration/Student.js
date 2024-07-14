@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MetaData from "../layout/MetaData";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from '../layout/Loader'
 const Student = ({ isSidebarClosed }) => {
     const [departments, setDepartments] = React.useState([]);
     const [semesters, setSemesters] = React.useState([]);
@@ -104,6 +105,7 @@ const Student = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Student Registration'} />
             <div className="home-content">
+                <Loader size={100} color="#68C9EA" timeout={5000} />
                 <div className='title'>
                     <h2>Student Registration</h2>
                 </div>

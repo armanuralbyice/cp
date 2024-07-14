@@ -14,6 +14,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import MetaData from "../layout/MetaData";
+import Loader from '../layout/Loader'
 const User = ({ isSidebarClosed }) => {
     const [studentId, setStudentId] = useState('');
     const [facultyId, setFacultyId] = useState('');
@@ -206,6 +207,7 @@ const User = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Users'} />
             <div className="home-content">
+                <Loader size={100} color="#68C9EA" timeout={5000} />
                 <div className='table_root'>
                     <div className='header-userData'>
                         <div className='btn-box'>

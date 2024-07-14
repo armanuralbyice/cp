@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MetaData from "../layout/MetaData";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from '../layout/Loader'
 const Faculty = ({ isSidebarClosed }) => {
     const [faculty, setFaculty] = useState({
         name: '',
@@ -82,6 +83,7 @@ const Faculty = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Faculty Registration'} />
             <div className="home-content">
+                <Loader size={100} color="#68C9EA" timeout={5000} />
                 <div className='title'>
                     <h2>Faculty Registration</h2>
                 </div>

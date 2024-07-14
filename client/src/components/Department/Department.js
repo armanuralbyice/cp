@@ -10,11 +10,9 @@ import MenuItem from "@mui/material/MenuItem";
 import axios, { HttpStatusCode } from "axios";
 import '../layout/sidebar.css'
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { fetchDepartmentData } from '../utils/fetchData';
-
+import Loader from '../layout/Loader'
 const Department = ({ isSidebarClosed }) => {
-    const navigate = useNavigate()
     const [department, setDepartment] = useState({
         name: ''
     })
@@ -101,6 +99,7 @@ const Department = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Create Department'} />
             <div className="home-content">
+                <Loader size={100} color="#68C9EA" timeout={5000} />
                 <div className='title'>
                     <h2>Create Department</h2>
                 </div>

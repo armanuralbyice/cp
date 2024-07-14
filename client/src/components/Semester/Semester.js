@@ -10,6 +10,7 @@ import Pagination from "@mui/material/Pagination";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import Loader from '../layout/Loader'
 const Semester = ({ isSidebarClosed }) => {
     const navigate = useNavigate();
     const [semester, setSemester] = useState({
@@ -128,6 +129,7 @@ const Semester = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Create Semester'} />
             <div className="home-content">
+                <Loader size={100} color="#68C9EA" timeout={5000} />
                 <div className='title'>
                     <h2>Create Semester</h2>
                 </div>
