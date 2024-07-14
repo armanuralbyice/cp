@@ -68,7 +68,7 @@ const Department = ({ isSidebarClosed }) => {
         fetchDepartmentDataList();
     }, []);
     const handleDelete = async (id) => {
-        //const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         try {
             await axios.delete(`https://cp-wine-mu.vercel.app/department/delete/${id}`, {
                 headers: {
