@@ -43,7 +43,11 @@ function App() {
   return (
     <div className="App">
       {
-        loading ? <BounceLoader color={'#68C9EA'} loading={loading} size={100} /> :
+        loading ?
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <BounceLoader color={'#68C9EA'} loading={loading} size={100} />
+          </div>
+          :
           <Router>
             <Routes>
               <Route path="/" element={<Login />} />
