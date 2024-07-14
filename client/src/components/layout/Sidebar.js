@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useState} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faAngleDown,
-    faBars, faBook,
-    faHouse, faList,
+    faBars,
+    faBook,
+    faHouse,
+    faList,
     faPersonCirclePlus,
     faPlus,
     faShapes,
     faUsersGear
 } from '@fortawesome/free-solid-svg-icons';
 import './sidebar.css';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import MetaData from './MetaData';
-//import { useAuth } from '../../router/AuthProvider';
+import {useAuth} from '../Router/AuthProvider';
 
 const Header = ({ isSidebarClosed, toggleSidebar }) => {
-    // const { isAuthenticated, userRole } = useAuth();
+    const {isAuthenticated, userRole} = useAuth();
     const [isSubMenuOpen, setIsSubMenuOpen] = useState({
         create: false,
         registration: false
     });
-    // if (!isAuthenticated) {
-    //     return null;
-    // }
-    // Function to toggle the state of a specific dropdown menu
+    if (!isAuthenticated) {
+        return null;
+    }
     const toggleSubMenu = (menu) => {
         setIsSubMenuOpen(prevState => ({
             ...prevState,
@@ -39,8 +40,8 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                     <FontAwesomeIcon icon={faBars} className='bx bx-menu' onClick={toggleSidebar} />
                 </i>
             </div>
-            {/* {
-                isAuthenticated && ( */}
+            {
+                isAuthenticated && (
             <ul className="nav-links">
                 <li>
                     <Link to='/'>
@@ -55,9 +56,9 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         </li>
                     </ul>
                 </li>
-                {/* {userRole === 'admin' && (
-                            <> */}
-                <li>
+                {userRole === 'admin' && (
+                    <>
+                    <li>
                     <div className="icon-link">
                         <Link to='' onClick={() => toggleSubMenu('create')}>
                             <i><FontAwesomeIcon icon={faPlus} /></i>
@@ -82,13 +83,13 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         <li><Link to="offer-course">Offer Course</Link></li>
                     </ul>
                 </li>
-                {/* </>
-                        )} */}
+                    </>
+                )}
 
-                {/* {
+                {
                             userRole === 'admin' && (
-                                <> */}
-                <li>
+                        <>
+                        <li>
                     <div className="icon-link">
                         <Link to='' onClick={() => toggleSubMenu('registration')}>
                             <i><FontAwesomeIcon icon={faPersonCirclePlus} /></i>
@@ -111,13 +112,13 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         <li><Link to="admin">Admin</Link></li>
                     </ul>
                 </li>
-                {/* </>
+                        </>
                             )
-                        } */}
-                {/* {
+                }
+                {
                             userRole === 'admin' && (
-                                <> */}
-                <li>
+                        <>
+                        <li>
                     <Link to='/showOfferCourses'>
                         <i><FontAwesomeIcon icon={faShapes} /></i>
                         <span className="link_name">Offer Courses</span>
@@ -130,13 +131,13 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         </li>
                     </ul>
                 </li>
-                {/* </>
+                        </>
                             )
-                        } */}
-                {/* {
+                }
+                {
                             userRole === 'student' && (
-                                <> */}
-                <li>
+                        <>
+                        <li>
                     <Link to='/advising'>
                         <i><FontAwesomeIcon icon={faBook} /></i>
                         <span className="link_name">Advising</span>
@@ -149,14 +150,14 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         </li>
                     </ul>
                 </li>
-                {/* </>
+                        </>
                             )
-                        } */}
-                {/*
-                        {
+                }
+
+                {
                             userRole === 'faculty' && (
-                                <> */}
-                <li>
+                        <>
+                        <li>
                     <Link to='/faculty/show-enroll-course'>
                         <i><FontAwesomeIcon icon={faList} /></i>
                         <span className="link_name">Faculty Course List</span>
@@ -169,14 +170,14 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         </li>
                     </ul>
                 </li>
-                {/* </>
+                        </>
                             )
-                        } */}
+                }
 
-                {/* {
+                {
                             userRole === 'admin' && (
-                                <> */}
-                <li>
+                        <>
+                        <li>
                     <Link to='users'>
                         <i><FontAwesomeIcon icon={faUsersGear} /></i>
                         <span className="link_name">Users</span>
@@ -189,13 +190,13 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         </li>
                     </ul>
                 </li>
-                {/* </>
+                        </>
                             )
-                        } */}
+                }
 
             </ul>
-            {/* )
-            } */}
+                )
+            }
         </div>
     );
 };

@@ -46,16 +46,16 @@ function App() {
             isSidebarClosed={isSidebarClosed}
           /><Outlet /></PrivateRoute>)}>
             <Route path="/home" element={<PrivateRoute><Home isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-            <Route path="/department" element={<Department isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/semester" element={<Semester isSidebarClosed={isSidebarClosed} />} />
+            <Route path="/department" element={<PrivateRoute><Department isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/semester" element={<PrivateRoute><Semester isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
             <Route path="/classroom" element={<PrivateRoute><Classroom isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-            <Route path="/course" element={<Course isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/student" element={<Student isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/faculty" element={<Faculty isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/admin" element={<Admin isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/offer-course" element={<OfferCourses isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/offer-course/list" element={<OfferCoursesGrid isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/users" element={<User isSidebarClosed={isSidebarClosed} />} />
+            <Route path="/course" element={<PrivateRoute><Course isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/student" element={<PrivateRoute><Student isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/faculty" element={<PrivateRoute><Faculty isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/admin" element={<PrivateRoute><Admin isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/offer-course" element={<PrivateRoute><OfferCourses isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/offer-course/list" element={<PrivateRoute><OfferCoursesGrid isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/users" element={<PrivateRoute><User isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
           </Route>
         </Routes>
       </Router>

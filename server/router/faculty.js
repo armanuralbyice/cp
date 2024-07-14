@@ -1,11 +1,12 @@
 const express = require('express');
 const { saveFaculty, getAllFaculties, getFacultyByID, getFacultiesByDepartment } = require("../controller/facultyController");
-//const { authenticateRegister, authorizeRegisterRoles } = require("../middleware/auth");
+const { authenticateRegister, authorizeRegisterRoles } = require("../middleware/auth");
 
 const router = express.Router();
 
-// router.use(authenticateRegister)
-// router.use(authorizeRegisterRoles)
+router.use(authenticateRegister)
+router.use(authorizeRegisterRoles)
+
 router.route('/faculty/save').post(saveFaculty)
 router.route('/:departmentId/faculties').get(getFacultiesByDepartment)
 router.route('/faculties/all').get(getAllFaculties)
