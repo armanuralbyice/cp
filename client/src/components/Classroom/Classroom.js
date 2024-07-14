@@ -22,10 +22,10 @@ const Classroom = ({ isSidebarClosed }) => {
         e.preventDefault();
         axios
             .post('https://cp-wine-mu.vercel.app/classroom/save', classroom, {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 if (res.status === 201) {
@@ -65,28 +65,16 @@ const Classroom = ({ isSidebarClosed }) => {
     const fetchClassrooms = () => {
         axios
             .get('https://cp-wine-mu.vercel.app/classroom/all', {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 setClassrooms(res.data.classrooms);
             })
             .catch((err) => {
-                // if (err.response) {
-                //     console.log(err.response.data);
-                //     if (err.response.status === 401) {
-                //         console.error('Unauthorized. Please log in again.');
-                //         navigate('/login');
-                //     } else if (err) {
-                //         toast.warning(err.response.data.message);
-                //     } else {
-                //         toast.error('Internal Server Error.');
-                //     }
-                // } else {
-                //     toast.error('Network Error. Please try again later.');
-                // }
+                toast.error('Internal Server Error');
             });
 
     }
@@ -97,10 +85,10 @@ const Classroom = ({ isSidebarClosed }) => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`https://cp-wine-mu.vercel.app/classroom/delete/${id}`, {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             });
             setClassrooms(classrooms.filter(classroom => classroom._id !== id));
             toast.success('Semester deleted successfully');

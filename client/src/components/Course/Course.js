@@ -19,10 +19,10 @@ const Course = ({ isSidebarClosed }) => {
         e.preventDefault();
         axios
             .post('https://cp-wine-mu.vercel.app/course/save', course, {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 if (res.status === 201) {
@@ -43,10 +43,10 @@ const Course = ({ isSidebarClosed }) => {
     const fetchDepartments = () => {
         axios
             .get('https://cp-wine-mu.vercel.app/department/all', {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 setDepartments(res.data.department);
@@ -66,10 +66,10 @@ const Course = ({ isSidebarClosed }) => {
 
         axios
             .get(url, {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 setCourses(res.data.courses);

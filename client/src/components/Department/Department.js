@@ -21,14 +21,14 @@ const Department = ({ isSidebarClosed }) => {
     const [departments, setDepartments] = useState([])
     const handleDepartmentSubmit = (e) => {
         e.preventDefault();
-        //const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         try {
             axios
                 .post('https://cp-wine-mu.vercel.app/department/save', department, {
-                    // headers: {
-                    //     'Authorization': `Bearer ${token}`,
-                    //     'Content-Type': 'application/json',
-                    // }
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
                 })
                 .then((res) => {
                     if (res.status === 201) {
@@ -71,10 +71,10 @@ const Department = ({ isSidebarClosed }) => {
         //const token = localStorage.getItem('token');
         try {
             await axios.delete(`https://cp-wine-mu.vercel.app/department/delete/${id}`, {
-                // headers: {
-                //     'Authorization': `Bearer ${token}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
             });
             setDepartments(departments.filter(department => department._id !== id));
             toast.success('Department deleted successfully');

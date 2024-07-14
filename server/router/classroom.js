@@ -5,6 +5,7 @@ const { saveClassroom, getAllClassrooms, deleteClassroom } = require('../control
 
 
 const router = express.Router();
+
 router.use(authenticateRegister)
 router.use(authorizeRegisterRoles)
 
