@@ -21,13 +21,7 @@ import PrivateRoute from './components/Router/PrivateRouter';
 function App() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isSidebarClosed, setIsSidebarClosed] = useState(true);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false)
-    }, 5000)
-  }, [])
+
   const toggleSubMenu = () => {
     setIsSubMenuOpen(prevState => !prevState);
   };
@@ -42,37 +36,30 @@ function App() {
   };
   return (
     <div className="App">
-      {
-        loading ?
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <BounceLoader color={'#68C9EA'} loading={loading} size={100} />
-          </div>
-          :
-          <Router>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route element={(<PrivateRoute><Sidebar
-                toggleSubMenu={toggleSubMenu}
-                toggleSidebar={toggleSidebar}
-                handleDropdownClick={handleDropdownClick}
-                isSubMenuOpen={isSubMenuOpen}
-                isSidebarClosed={isSidebarClosed}
-              /><Outlet /></PrivateRoute>)}>
-                <Route path="/home" element={<PrivateRoute><Home isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/department" element={<PrivateRoute><Department isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/semester" element={<PrivateRoute><Semester isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/classroom" element={<PrivateRoute><Classroom isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/course" element={<PrivateRoute><Course isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/student" element={<PrivateRoute><Student isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/faculty" element={<PrivateRoute><Faculty isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/admin" element={<PrivateRoute><Admin isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/offer-course" element={<PrivateRoute><OfferCourses isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/offer-course/list" element={<PrivateRoute><OfferCoursesGrid isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-                <Route path="/users" element={<PrivateRoute><User isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
-              </Route>
-            </Routes>
-          </Router>
-      }
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route element={(<PrivateRoute><Sidebar
+            toggleSubMenu={toggleSubMenu}
+            toggleSidebar={toggleSidebar}
+            handleDropdownClick={handleDropdownClick}
+            isSubMenuOpen={isSubMenuOpen}
+            isSidebarClosed={isSidebarClosed}
+          /><Outlet /></PrivateRoute>)}>
+            <Route path="/home" element={<PrivateRoute><Home isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/department" element={<PrivateRoute><Department isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/semester" element={<PrivateRoute><Semester isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/classroom" element={<PrivateRoute><Classroom isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/course" element={<PrivateRoute><Course isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/student" element={<PrivateRoute><Student isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/faculty" element={<PrivateRoute><Faculty isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/admin" element={<PrivateRoute><Admin isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/offer-course" element={<PrivateRoute><OfferCourses isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/offer-course/list" element={<PrivateRoute><OfferCoursesGrid isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/users" element={<PrivateRoute><User isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
