@@ -48,7 +48,7 @@ function App() {
             <Route path="/home" element={<PrivateRoute><Home isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
             <Route path="/department" element={<Department isSidebarClosed={isSidebarClosed} />} />
             <Route path="/semester" element={<Semester isSidebarClosed={isSidebarClosed} />} />
-            <Route path="/classroom" element={<Classroom isSidebarClosed={isSidebarClosed} />} />
+            <Route path="/classroom" element={<PrivateRoute><Classroom isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
             <Route path="/course" element={<Course isSidebarClosed={isSidebarClosed} />} />
             <Route path="/student" element={<Student isSidebarClosed={isSidebarClosed} />} />
             <Route path="/faculty" element={<Faculty isSidebarClosed={isSidebarClosed} />} />
