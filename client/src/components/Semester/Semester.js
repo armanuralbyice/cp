@@ -18,14 +18,14 @@ const Semester = ({ isSidebarClosed }) => {
     });
     const [semesters, setSemesters] = useState([]);
     const handleSemesterSubmit = (e) => {
-        //const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         e.preventDefault();
         axios
             .post('https://cp-wine-mu.vercel.app/semester/save', semester, {
-                // headers: {
-                //     'Authorization': `Bearer ${token}`,
-                //     'Content-Type': 'application/json'
-                // }
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             })
             .then((res) => {
                 if (res.status === 201) {
@@ -79,10 +79,10 @@ const Semester = ({ isSidebarClosed }) => {
         const token = localStorage.getItem('token');
         axios
             .get('https://cp-wine-mu.vercel.app/semester/all', {
-                // headers: {
-                //     'Authorization': `Bearer ${token}`,
-                //     'Content-Type': 'application/json'
-                // }
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             })
             .then((res) => {
                 setSemesters(res.data.semester);
@@ -112,9 +112,9 @@ const Semester = ({ isSidebarClosed }) => {
         const token = localStorage.getItem('token');
         try {
             await axios.delete(`https://cp-wine-mu.vercel.app/semester/delete/${id}`, {
-                // headers: {
-                //     'Authorization': `Bearer ${token}`,
-                // }
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
             });
             setSemesters(semesters.filter(semester => semester._id !== id));
             toast.success('Semester deleted successfully');

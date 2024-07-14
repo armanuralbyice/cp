@@ -42,10 +42,10 @@ const Student = ({ isSidebarClosed }) => {
     const handelSubmit = (e) => {
         e.preventDefault()
         axios.post('https://cp-wine-mu.vercel.app/user/student/save', student, {
-            // headers: {
-            //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            //     'Content-Type': 'application/json',
-            // },
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
         })
             .then((res) => {
                 if (res.status === 201) {
@@ -65,10 +65,10 @@ const Student = ({ isSidebarClosed }) => {
     const fetchDepartments = () => {
         axios
             .get('https://cp-wine-mu.vercel.app/department/all', {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 setDepartments(res.data.department);
@@ -82,10 +82,10 @@ const Student = ({ isSidebarClosed }) => {
     const fetchSemesters = () => {
         axios
             .get('https://cp-wine-mu.vercel.app/semester/all', {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 setSemesters(res.data.semester);
@@ -96,9 +96,6 @@ const Student = ({ isSidebarClosed }) => {
             });
 
     }
-
-
-
     React.useEffect(() => {
         fetchDepartments();
         fetchSemesters()

@@ -187,7 +187,12 @@ const OfferCourses = ({ isSidebarClosed }) => {
         };
 
         try {
-            const response = await axios.post('https://cp-wine-mu.vercel.app/offer-course/save', dataToSend);
+            const response = await axios.post('https://cp-wine-mu.vercel.app/offer-course/save', dataToSend, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+            });
             console.log('Courses offered successfully:', response.data);
             toast.success("Courses offered successfully!");
 

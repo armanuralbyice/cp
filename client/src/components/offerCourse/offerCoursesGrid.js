@@ -54,10 +54,10 @@ const OfferCoursesGrid = ({ isSidebarClosed }) => {
 
         try {
             const response = await axios.delete(`https://cp-wine-mu.vercel.app/offer-course/delete?semesterId=${semesterId}&departmentId=${departmentId}&courseId=${courseId}`, {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // }
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
                 params: {
                     semesterId,
                     departmentId,

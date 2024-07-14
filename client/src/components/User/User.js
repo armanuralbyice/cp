@@ -29,10 +29,10 @@ const User = ({ isSidebarClosed }) => {
         }
 
         axios.get(url, {
-            // headers: {
-            //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            //     'Content-Type': 'application/json',
-            // },
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
         })
             .then((res) => {
                 if (selectedCategory === 'students') {
@@ -66,10 +66,10 @@ const User = ({ isSidebarClosed }) => {
             if (selectedCategory === 'students') {
                 axios
                     .get(`https://cp-wine-mu.vercel.app/user/student/${studentId}`, {
-                        // headers: {
-                        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                        //     'Content-Type': 'application/json',
-                        // },
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type': 'application/json',
+                        },
                     })
                     .then((res) => {
                         if (res.data.student) {
@@ -88,10 +88,10 @@ const User = ({ isSidebarClosed }) => {
             } else if (selectedCategory === 'faculties') {
                 axios
                     .get(`https://cp-wine-mu.vercel.app/user/faculty/${facultyId}`, {
-                        // headers: {
-                        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                        //     'Content-Type': 'application/json',
-                        // },
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type': 'application/json',
+                        },
                     })
                     .then((res) => {
                         if (res.data.faculty) {
@@ -110,10 +110,10 @@ const User = ({ isSidebarClosed }) => {
             } else if (selectedCategory === 'admins') {
                 axios
                     .get(`https://cp-wine-mu.vercel.app/user/admin/${adminID}`, {
-                        // headers: {
-                        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                        //     'Content-Type': 'application/json',
-                        // },
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type': 'application/json',
+                        },
                     })
                     .then((res) => {
                         if (res.data.admin) {
@@ -189,10 +189,10 @@ const User = ({ isSidebarClosed }) => {
     const fetchDepartments = () => {
         axios
             .get('https://cp-wine-mu.vercel.app/department/all', {
-                // headers: {
-                //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'application/json',
-                // },
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then((res) => {
                 setDepartments(res.data.department);
