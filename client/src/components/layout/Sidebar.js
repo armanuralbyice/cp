@@ -8,6 +8,7 @@ import {
     faList,
     faPersonCirclePlus,
     faPlus,
+    faRightFromBracket,
     faShapes,
     faUsersGear
 } from '@fortawesome/free-solid-svg-icons';
@@ -208,11 +209,14 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                         </li>
                         <li>
                             <div class="profile-details">
+                                <div class="profile-content">
+
+                                </div>
                                 <div class="name-job">
                                     <div class="profile_name">Prem Shahi</div>
                                     <div class="job">Web Desginer</div>
                                 </div>
-                                <i class='bx bx-log-out' ></i>
+                                <i><FontAwesomeIcon icon={faRightFromBracket} /></i>
                             </div>
                         </li>
 
