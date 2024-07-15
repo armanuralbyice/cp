@@ -18,7 +18,7 @@ import MetaData from './MetaData';
 import { useAuth } from '../Router/AuthProvider';
 
 const Header = ({ isSidebarClosed, toggleSidebar }) => {
-    const { isAuthenticated, userRole } = useAuth();
+    const { isAuthenticated, userRole, user } = useAuth();
     const [isSubMenuOpen, setIsSubMenuOpen] = useState({
         create: false,
         registration: false
@@ -32,7 +32,6 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
             [menu]: !prevState[menu]
         }));
     };
-
     return (
         <div className={`sidebar ${isSidebarClosed ? 'close' : ''}`}>
             <MetaData title={'Home'} />
@@ -213,8 +212,8 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
 
                                 </div>
                                 <div class="name-job">
-                                    <div class="profile_name">Prem Shahi</div>
-                                    <div class="job">Web Desginer</div>
+                                    <div class="profile_name">{user.name}</div>
+                                    <div class="job">{user.email}</div>
                                 </div>
                                 <i><FontAwesomeIcon icon={faRightFromBracket} /></i>
                             </div>

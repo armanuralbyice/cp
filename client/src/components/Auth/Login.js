@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from '../Router/AuthProvider';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 const Login = () => {
     const { setIsAuthenticated } = useAuth();
     const [email, setEmail] = useState('');
