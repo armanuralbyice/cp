@@ -8,36 +8,24 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
-    const [userRole, setUserRole] = useState(localStorage.getItem('role') || 'admin');
-    const [user, setUser] = useState(null);
+    const [userRole, setUserRole] = useState(localStorage.getItem('role') || '');
+    const [user, setUser] = useState('')
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const role = localStorage.getItem('role');
-        const name = localStorage.getItem('name');
-        const email = localStorage.getItem('email');
-
-        if (token && role) {
-            setUser({
-                token,
-                role,
-                name,
-                email
-            });
-            setIsAuthenticated(true);
+        if (isAuthenticated) {
+            const role = localStorage.getItem('role');
+            const name = localStorage.getItem('name');
+            const email = localStorage.getItem('email');
+            setUser(name, email)
             setUserRole(role);
         } else {
-            setUser(null);
-            setIsAuthenticated(false);
-            setUserRole(null);
+            setUserRole('admin');
         }
-    }, []);
+    }, [isAuthenticated]);
     console.log(user);
-
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, userRole, user }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, userRole }}>
             {children}
         </AuthContext.Provider>
     );
 };
-
