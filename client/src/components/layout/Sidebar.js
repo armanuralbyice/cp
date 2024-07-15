@@ -213,13 +213,11 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                                 </div>
                                 <div class="name-job">
                                     <div class="profile_name">{userName}</div>
-                                    <div class="job">{userEmail}</div>
                                     <div class="job">{userRole}</div>
                                 </div>
                                 <i><FontAwesomeIcon icon={faRightFromBracket} /></i>
                             </div>
                         </li>
-
                     </ul>
                 )
             }
