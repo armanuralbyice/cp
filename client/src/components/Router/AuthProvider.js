@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
             const role = localStorage.getItem('role');
             const name = localStorage.getItem('name');
             const email = localStorage.getItem('email');
-            setUser(name, email)
+            setUser({ name, email })
             setUserRole(role);
         } else {
             setUserRole('admin');
