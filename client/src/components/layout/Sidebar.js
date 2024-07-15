@@ -215,19 +215,6 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                             )
                         }
                         <li>
-                            <Link to='logout'>
-                                <i><FontAwesomeIcon icon={faUsersGear} /></i>
-                                <span className="link_name">Logout</span>
-                            </Link>
-                            <ul className="sub-menu blank">
-                                <li>
-                                    <Link to='logout' className="link_name">
-                                        Logout
-                                    </Link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
                             <div class="profile-details">
                                 <div class="profile-content">
 
