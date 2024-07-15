@@ -9,22 +9,23 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
     const [userRole, setUserRole] = useState(localStorage.getItem('role') || '');
-    const [user, setUser] = useState({})
+    const [userName, setUserName] = useState(localStorage.getItem('name') || '');
+    const [userEnail, setUserEmail] = useState(localStorage.getItem('email') || '');
 
     useEffect(() => {
         if (isAuthenticated) {
             const role = localStorage.getItem('role');
             const name = localStorage.getItem('name');
             const email = localStorage.getItem('email');
-            setUser({ name, email })
+            setUserName(name)
+            setUserEmail(email);
             setUserRole(role);
         } else {
             setUserRole('admin');
         }
     }, [isAuthenticated]);
-    console.log(user);
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, userRole }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, userRole, userName, userEnail }}>
             {children}
         </AuthContext.Provider>
     );
