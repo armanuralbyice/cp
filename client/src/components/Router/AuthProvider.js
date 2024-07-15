@@ -9,7 +9,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
     const [userRole, setUserRole] = useState(localStorage.getItem('role') || '');
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState({})
 
     useEffect(() => {
         if (isAuthenticated) {
