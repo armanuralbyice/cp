@@ -16,9 +16,11 @@ import './sidebar.css';
 import { Link } from 'react-router-dom';
 import MetaData from './MetaData';
 import { useAuth } from '../Router/AuthProvider';
+import axios from 'axios';
+import { toast } from "react-toastify";
 
 const Header = ({ isSidebarClosed, toggleSidebar }) => {
-    const { isAuthenticated, userRole, userName, userEmail } = useAuth();
+    const { isAuthenticated, userRole, userName } = useAuth();
     const [isSubMenuOpen, setIsSubMenuOpen] = useState({
         create: false,
         registration: false
@@ -32,6 +34,25 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
             [menu]: !prevState[menu]
         }));
     };
+    const handelLogout = async () => {
+        try {
+            await axios.get('https://cp-wine-mu.vercel.app/auth/login', {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('role');
+                    localStorage.removeItem('name');
+                    localStorage.removeItem('email');
+                    window.location.href = '/';
+                }
+            })
+        } catch (err) {
+            toast.error('Internal server error: ' + err.message)
+        }
+    }
     return (
         <div className={`sidebar ${isSidebarClosed ? 'close' : ''}`}>
             <MetaData title={'Home'} />
@@ -215,7 +236,7 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                                     <div class="profile_name">{userName}</div>
                                     <div class="job">{userRole}</div>
                                 </div>
-                                <i><FontAwesomeIcon icon={faRightFromBracket} /></i>
+                                <i onClick={handelLogout}><FontAwesomeIcon icon={faRightFromBracket} /></i>
                             </div>
                         </li>
                     </ul>

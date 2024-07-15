@@ -53,7 +53,7 @@ const Course = ({ isSidebarClosed }) => {
                 setDepartments(res.data.department);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error('Internal Server Error')
             });
     };
 
