@@ -207,7 +207,7 @@ const User = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Users'} />
             <div className="home-content">
-                <Loader size={100} color="#68C9EA" timeout={5000} />
+                <Loader size={100} color="#68C9EA" timeout={3000} />
                 <div className='table_root'>
                     <div className='header-userData'>
                         <div className='btn-box'>

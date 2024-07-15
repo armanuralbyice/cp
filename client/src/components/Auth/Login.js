@@ -31,6 +31,8 @@ const Login = () => {
                     const { user, token } = response.data;
                     localStorage.setItem('token', token);
                     localStorage.setItem('role', user.role);
+                    localStorage.setItem('name', user.name);
+                    localStorage.setItem('email', user.email)
                     if (response && response.status === 200) {
                         navigate('/home')
                     }

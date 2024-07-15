@@ -193,6 +193,28 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                                 </>
                             )
                         }
+                        <li>
+                            <Link to='logout'>
+                                <i><FontAwesomeIcon icon={faUsersGear} /></i>
+                                <span className="link_name">Logout</span>
+                            </Link>
+                            <ul className="sub-menu blank">
+                                <li>
+                                    <Link to='logout' className="link_name">
+                                        Logout
+                                    </Link>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="profile-details">
+                                <div class="name-job">
+                                    <div class="profile_name">Prem Shahi</div>
+                                    <div class="job">Web Desginer</div>
+                                </div>
+                                <i class='bx bx-log-out' ></i>
+                            </div>
+                        </li>
 
                     </ul>
                 )

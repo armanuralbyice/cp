@@ -83,7 +83,7 @@ const Faculty = ({ isSidebarClosed }) => {
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Faculty Registration'} />
             <div className="home-content">
-                <Loader size={100} color="#68C9EA" timeout={5000} />
+                <Loader size={100} color="#68C9EA" timeout={3000} />
                 <div className='title'>
                     <h2>Faculty Registration</h2>
                 </div>

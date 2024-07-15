@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BounceLoader from 'react-spinners/BounceLoader';
 
-const Loader = ({ size = 100, color = '#68C9EA', timeout = 5000 }) => {
+const Loader = ({ size = 100, color = '#68C9EA', timeout = 3000 }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
