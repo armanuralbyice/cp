@@ -36,7 +36,7 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
     };
     const handelLogout = async () => {
         try {
-            await axios.get('https://cp-wine-mu.vercel.app/auth/login', {
+            await axios.get('https://cp-wine-mu.vercel.app/auth/logout', {
                 headers: {
                     'Content-Type': 'application/json',
                 }
