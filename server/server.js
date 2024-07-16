@@ -13,6 +13,7 @@ const facultyRouter = require('./router/faculty');
 const adminRouter = require('./router/admin');
 const offerCourseRouter = require('./router/offerCourse');
 const loginRouter = require('./router/login');
+const advisingRouter = require('./router/advising');
 const ErrorHandler = require('./middleware/errors');
 
 const app = express();
@@ -45,6 +46,7 @@ app.use('/user', studentRouter);
 app.use('/user', facultyRouter);
 app.use('/user', adminRouter);
 app.use('/offer-course', offerCourseRouter);
+app.use('/advising', advisingRouter);
 app.use('/auth', loginRouter);
 app.use(ErrorHandler);
 

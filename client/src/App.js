@@ -1,8 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/layout/Sidebar";
-import BounceLoader from "react-spinners/BounceLoader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Home from "./components/Home/Home";
 import Department from './components/Department/Department';
 import Semester from './components/Semester/Semester';
@@ -16,6 +15,7 @@ import OfferCoursesGrid from './components/offerCourse/offerCoursesGrid';
 import User from './components/User/User';
 import Login from './components/Auth/Login';
 import PrivateRoute from './components/Router/PrivateRouter';
+import Advising from './components/Advising/Advising';
 
 
 function App() {
@@ -57,6 +57,7 @@ function App() {
             <Route path="/offer-course" element={<PrivateRoute><OfferCourses isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
             <Route path="/offer-course/list" element={<PrivateRoute><OfferCoursesGrid isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
             <Route path="/users" element={<PrivateRoute><User isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
+            <Route path="/advising" element={<PrivateRoute><Advising isSidebarClosed={isSidebarClosed} /></PrivateRoute>} />
           </Route>
         </Routes>
       </Router>

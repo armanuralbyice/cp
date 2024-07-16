@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { toast } from "react-toastify";
 export const fetchSemesterData = async () => {
     try {
         const res =
@@ -85,3 +85,50 @@ export const fetchOfferCourses = async (semesterId, departmentId) => {
         return []
     }
 }
+
+export const fetchOfferCoursesForAdvising = async () => {
+    try {
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        };
+        const response = await axios.get('https://cp-wine-mu.vercel.app/advising/offerCourses', config);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            if (error.response.status === 404) {
+                toast.warning(error.response.data.message);
+            } else if (error.response.status === 401) {
+                toast.error('Unauthorized access. Please log in again.');
+            }
+        } else {
+            console.error('Error message:', error.message);
+        }
+        return [];
+    }
+};
+export const fetchAdvisingCourses = async () => {
+    try {
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            },
+        };
+        const response = await axios.get('https://cp-wine-mu.vercel.app/advising/course', config);
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            if (error.response.status === 404) {
+                toast.warning(error.response.data.message);
+            } else if (error.response.status === 401) {
+                toast.error('Unauthorized access. Please log in again.');
+            }
+        } else {
+            console.error('Error message:', error.message);
+        }
+        return [];
+    }
+};
