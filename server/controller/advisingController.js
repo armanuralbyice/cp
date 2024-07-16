@@ -141,3 +141,43 @@ exports.deleteEnrollCourseById = catchAsync(async (req, res, next) => {
         message: 'Delete successfully'
     });
 });
+// Advising semester enroll courses get
+exports.getAdvisingCourses = catchAsync(async (req, res, next) => {
+    const studentID = req.user._id;
+    const student = await Student.findById(studentID);
+
+    if (!student) {
+        return next(new ErrorHandler('Student not found', 404));
+    }
+
+    const lastSemester = await Semester.findOne().sort({ createdAt: -1 }).exec();
+    if (!lastSemester) {
+        return next(new ErrorHandler('No semester found', 404));
+    }
+
+    const findCourses = await CourseEnroll.findOne({
+        student: student._id,
+        semester: lastSemester._id
+    }).populate([
+        {
+            path: 'student',
+            select: 'name studentID'
+        },
+        {
+            path: 'enrollCourses.course',
+            populate: [
+                { path: 'courseName', select: 'courseCode' },
+                { path: 'classRoom', select: 'building classroomNo' },
+                { path: 'labRoom', select: 'building classroomNo' }
+            ]
+
+        }
+    ])
+    if (!findCourses) {
+        return next(new ErrorHandler('No founded courses', 404))
+    }
+    res.status(200).json({
+        success: true,
+        courses: findCourses
+    })
+})
