@@ -59,7 +59,7 @@ export const fetchCourses = async (selectedDepartment) => {
 }
 export const fetchFaculties = async (selectedDepartment) => {
     try {
-        const res = await axios.get(`https://cp-wine-mu.vercel.app/user/department/${selectedDepartment}/faculties`, {
+        const res = await axios.get(`https://cp-wine-mu.vercel.app/user/${selectedDepartment}/faculties`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
