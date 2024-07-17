@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { generatePDFAdvisingSlip } from "../utils/pdfGenerate";
-
+import Loader from '../layout/Loader'
 const Advising = ({ isSidebarClosed }) => {
     const [courseDetails, setCourseDetails] = useState([]);
     const [enrollCourses, setEnrollCourses] = useState([]);
@@ -23,7 +23,7 @@ const Advising = ({ isSidebarClosed }) => {
         try {
             const response = await axios.post(`https://cp-wine-mu.vercel.app/advising/?courseId=${courseId}`, {}, config);
             if (response.status === 200) {
-                console.log(response.data);
+                <Loader size={100} color="#68C9EA" timeout={1000} />
                 toast.success('Course added successfully!');
                 fetchCourseList();
             }
@@ -35,7 +35,6 @@ const Advising = ({ isSidebarClosed }) => {
                     toast.error('An error occurred');
                 }
             } else {
-                console.error('Error message:', err.message);
                 toast.error('An error occurred');
             }
         }
@@ -94,6 +93,7 @@ const Advising = ({ isSidebarClosed }) => {
     return (
         <div className={`home-section ${isSidebarClosed ? 'sidebar-close' : ''}`}>
             <MetaData title={'Advising'} />
+            <Loader size={100} color="#68C9EA" timeout={3000} />
             <div className='title'>
                 {semester && <h3>Advising: {semester}</h3>}
             </div>

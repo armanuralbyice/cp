@@ -65,7 +65,7 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                 isAuthenticated && (
                     <ul className="nav-links">
                         <li>
-                            <Link to='/'>
+                            <Link to='/home'>
                                 <i><FontAwesomeIcon icon={faHouse} /></i>
                                 <span className="link_name">Home</span>
                             </Link>

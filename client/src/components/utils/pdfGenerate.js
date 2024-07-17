@@ -16,7 +16,8 @@ export const generatePDFAdvisingSlip = async () => {
         const xPos = (pdfWidth - imgWidth) / 2;
         const yPos = (pdfHeight - imgHeight) / 2;
         pdf.setFontSize(12);
-        pdf.text('Your text goes here', xPos, yPos);
+        pdf.text(<br>Name ${localStorage.getItem('name')}</br>)
+        pdf.text(<br>Name ${localStorage.getItem('email')}</br>)
         pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight);
         pdf.save('student-list.pdf');
     } else {
