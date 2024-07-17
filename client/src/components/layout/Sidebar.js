@@ -46,6 +46,8 @@ const Header = ({ isSidebarClosed, toggleSidebar }) => {
                     localStorage.removeItem('role');
                     localStorage.removeItem('name');
                     localStorage.removeItem('email');
+                    localStorage.removeItem('studentId');
+                    toast.success('Logged out successfully');
                     window.location.href = '/';
                 }
             })
