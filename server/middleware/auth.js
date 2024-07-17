@@ -7,8 +7,12 @@ const catchAsyncError = require('../middleware/catchAsyncError')
 
 exports.authenticateUser = (model) => catchAsyncError(async (req, res, next) => {
     try {
-        const { token } = await req.cookies;
-        if (!token) {
+        // const { token } = await req.cookies;
+        // if (!token) {
+        //     return next(new ErrorHandler('Not authorized to access this route, Login first', 401));
+        // }
+        const token = req.headers.authorization;
+        if (!token || !token.startsWith('Bearer ')) {
             return next(new ErrorHandler('Not authorized to access this route, Login first', 401));
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
