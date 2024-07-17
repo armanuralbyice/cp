@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const OfferCourse = require('./../courseModel/offerCourseSchema'); // Import the OfferCourse model
+const OfferCourse = require('./offerCourseSchema');
 
 const courseEnrollSchema = new mongoose.Schema({
     student: {
