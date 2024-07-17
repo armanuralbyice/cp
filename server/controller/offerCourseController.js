@@ -1,70 +1,102 @@
 const OfferCourseDetails = require('../model/offerCourseDetailsSchema');
+const OfferCourse = require('../model/offerCourseSchema');
+const Semester = require('../model/semesterSchema');
+const Department = require('../model/departmentSchema');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncError = require('../middleware/catchAsyncError');
-
-// save offerCourses
+// post offerCourses
 exports.offerCourse = catchAsyncError(async (req, res, next) => {
     const { semester, department, courses } = req.body;
 
     try {
-        const results = [];
+        // Check if semester exists
+        const semesterExists = await Semester.findById(semester);
+        if (!semesterExists) {
+            return next(new ErrorHandler('No such semester found', 404));
+        }
+        const departmentExists = await Department.findById(department);
+        if (!departmentExists) {
+            return next(new ErrorHandler('No such department found', 404));
+        }
 
-        for (const course of courses) {
-            const { courseName, section } = course;
+        const savedOfferCourses = [];
+        const skippedCourses = [];
 
-            const existingCourse = await OfferCourseDetails.findOne({
-                semester: semester,
-                department: department,
-                'courses.courseName': courseName,
-                'courses.section': section
+        for (let courseData of courses) {
+            // Check if a course with the same section already exists
+            const existingCourse = await OfferCourse.findOne({
+                department,
+                semester,
+                section: courseData.section
             });
 
-            if (existingCourse) {
-                results.push({
-                    ...course,
-                    exists: true,
-                    message: `Course ${courseName} - Section ${section} already exists`
+            if (!existingCourse) {
+                // If no existing course found, create and save the offer course
+                const newOfferCourse = new OfferCourse({
+                    ...courseData,
+                    semester,
+                    department
                 });
-                return next(new ErrorHandler('One or some courses already exists', 409))
+                savedOfferCourses.push(await newOfferCourse.save());
             } else {
-                const newCourse = {
-                    ...course,
-                    semester: semester,
-                    department: department
-                };
-                await OfferCourseDetails.findOneAndUpdate(
-                    { semester: semester, department: department },
-                    { $push: { courses: newCourse } },
-                    { upsert: true }
-                );
-                results.push({
-                    ...course,
-                    exists: false,
-                    message: `Course ${courseName} - Section ${section} added`
-                });
+                skippedCourses.push(courseData.courseName);
+                savedOfferCourses.push(existingCourse);
             }
         }
-        return res.status(200).json({
-            success: true,
-            results
+        const savedOfferCourseIds = savedOfferCourses.map(course => course._id);
+        let offerCourseDetails = await OfferCourseDetails.findOne({ department, semester });
+
+        if (!offerCourseDetails) {
+            offerCourseDetails = new OfferCourseDetails({
+                semester,
+                department,
+                courses: savedOfferCourseIds
+            });
+        } else {
+            offerCourseDetails.courses.push(...savedOfferCourseIds);
+        }
+
+        await offerCourseDetails.save();
+        await Semester.findByIdAndUpdate(
+            semester,
+            { $addToSet: { offerCourses: offerCourseDetails._id } },
+            { new: true }
+        );
+
+        let message = 'All courses added successfully';
+        if (skippedCourses.length > 0) {
+            message = `Some courses were skipped as they already exist: ${skippedCourses.join(', ')}`;
+        }
+        res.status(200).json({
+            status: 'success',
+            data: {
+                offerCourseDetails
+            },
+            message
         });
 
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Internal Server Error' });
+    } catch (error) {
+        console.error('Error in offerCourses:', error);
+        return next(new ErrorHandler('Internal Server Error', 500));
     }
 });
 
-// get offerCourses By semester and department
+// get offerCourses By semester and department (Admin Access)
 exports.getOfferCourses = catchAsyncError(async (req, res, next) => {
     const { semesterId, departmentId } = req.query;
     const offerCourseDetails = await OfferCourseDetails.findOne({
         semester: semesterId,
         department: departmentId
-    }).populate('courses.classRoom')
-        .populate('courses.labRoom')
-        .populate('courses.facultyName')
-        .populate('courses.courseName');
+    }).populate({
+        path: 'courses',
+        populate: [
+            { path: 'courseName', select: 'courseCode' },
+            { path: 'facultyName', select: 'name' },
+            { path: 'classRoom', select: 'building classroomNo' },
+            { path: 'labRoom', select: 'building classroomNo' },
+        ]
+    })
+
     if (!offerCourseDetails) {
         return next(new ErrorHandler('No course details found for the specified semester and department', 404));
     }
@@ -86,20 +118,31 @@ exports.deleteOfferCourse = catchAsyncError(async (req, res, next) => {
                 department: departmentId
             },
             {
-                $pull: { courses: { _id: courseId } }
+                $pull: { courses: courseId }
             },
             { new: true }
         );
 
-        if (!updatedOfferCourseDetails) {
-            return next(new ErrorHandler('No course found to delete', 404));
+        if (updatedOfferCourseDetails) {
+            const deletedOfferCourse = await OfferCourse.findByIdAndDelete(courseId)
+
+            if (!deletedOfferCourse) {
+                return next(new ErrorHandler(`No OfferCourse document found with ID: ${courseId}`, 200))
+            }
+        }
+        else {
+            console.log(`No OfferCourseDetails document found for department ${departmentId} and semester ${semesterId}`);
         }
 
         res.status(200).json({
             status: 'success',
-            message: 'Course deleted successfully'
+            message: 'Delete successfully'
         });
     } catch (error) {
-        return next(new ErrorHandler('Internal Server Error', 500))
+        console.error('Error deleting offer course:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'An error occurred while deleting the offer course'
+        });
     }
 });

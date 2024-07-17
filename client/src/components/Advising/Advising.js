@@ -47,7 +47,7 @@ const Advising = ({ isSidebarClosed }) => {
             if (response.offerCourseDetails && Array.isArray(response.offerCourseDetails.courses)) {
                 setCourseDetails(response.offerCourseDetails.courses);
                 setSemester(`${response.offerCourseDetails.semester.season}-${response.offerCourseDetails.semester.year}`);
-                console.log(response.offerCourseDetails.courses);
+                console.log(response.offerCourseDetails);
             } else {
                 console.error("Course data is not in the expected format", response.offerCourseDetails);
             }

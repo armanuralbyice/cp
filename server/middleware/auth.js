@@ -3,22 +3,16 @@ const Student = require('../model/studentSchema');
 const Faculty = require('../model/facultySchema');
 const Admin = require('../model/adminSchema');
 const ErrorHandler = require("../utils/ErrorHandler");
+const catchAsyncError = require('../middleware/catchAsyncError')
 
-
-exports.authenticateUser = (model) => async (req, res, next) => {
+exports.authenticateUser = (model) => catchAsyncError(async (req, res, next) => {
     try {
-        const token = req.headers.authorization;
-        if (!token || !token.startsWith('Bearer ')) {
+        const { token } = await req.cookies;
+        if (!token) {
             return next(new ErrorHandler('Not authorized to access this route, Login first', 401));
         }
-        const tokenStr = token.split(' ')[1];
-
-        const decoded = jwt.verify(tokenStr, process.env.JWT_SECRET);
-
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = await model.findById(decoded.id);
-        if (!req.user) {
-            return next(new ErrorHandler('User not found', 404));
-        }
         next();
     } catch (error) {
         if (error.name === 'JsonWebTokenError') {
@@ -29,17 +23,13 @@ exports.authenticateUser = (model) => async (req, res, next) => {
             return next(new ErrorHandler('Internal Server Error', 500));
         }
     }
-};
-
-
+});
 exports.authorizeUserRoles = (...roles) => (req, res, next) => {
     if (!roles.includes(req.user.role)) {
         return next(new ErrorHandler('Not authorized to access this route', 401));
     }
-
     next();
 };
-
 
 exports.authenticateStudent = exports.authenticateUser(Student);
 exports.authorizeStudentRoles = exports.authorizeUserRoles('student');

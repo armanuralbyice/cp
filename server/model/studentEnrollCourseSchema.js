@@ -1,20 +1,22 @@
 const mongoose = require('mongoose');
-const OfferCourse = require('./offerCourseDetailsSchema');
+const OfferCourse = require('./../courseModel/offerCourseSchema'); // Import the OfferCourse model
 
 const courseEnrollSchema = new mongoose.Schema({
     student: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
+        required: true,
     },
     semester: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Semester',
+        required: true,
     },
     enrollCourses: [
         {
             course: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'OfferCourseDetails'
+                ref: 'OfferCourse'
             },
             marks: {
                 mid1: {
@@ -37,6 +39,8 @@ const courseEnrollSchema = new mongoose.Schema({
         }
     ]
 });
+
+// Middleware to decrement available seats when a course is enrolled
 courseEnrollSchema.pre('save', async function (next) {
     try {
         const session = await mongoose.startSession();
@@ -44,6 +48,7 @@ courseEnrollSchema.pre('save', async function (next) {
 
         for (const enrolledCourse of this.enrollCourses) {
             const course = await OfferCourse.findById(enrolledCourse.course).session(session);
+
             if (!course) {
                 throw new Error(`Course not found for id ${enrolledCourse.course}`);
             }
@@ -59,6 +64,7 @@ courseEnrollSchema.pre('save', async function (next) {
 
         await session.commitTransaction();
         await session.endSession();
+
         next();
     } catch (error) {
         next(error);

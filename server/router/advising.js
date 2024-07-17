@@ -4,8 +4,8 @@ const { authenticateStudent, authorizeStudentRoles } = require("../middleware/au
 
 const router = express.Router();
 
-router.use(authorizeStudentRoles)
 router.use(authenticateStudent)
+router.use(authorizeStudentRoles)
 
 router.route('/offerCourses').get(getOfferCoursesByAdvising)
 router.route('/course').get(getAdvisingCourses)
