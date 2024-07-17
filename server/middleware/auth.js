@@ -15,7 +15,8 @@ exports.authenticateUser = (model) => catchAsyncError(async (req, res, next) => 
         if (!token || !token.startsWith('Bearer ')) {
             return next(new ErrorHandler('Not authorized to access this route, Login first', 401));
         }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const tokenStr = token.split(' ')[1];
+        const decoded = jwt.verify(tokenStr, process.env.JWT_SECRET);
         req.user = await model.findById(decoded.id);
         next();
     } catch (error) {
