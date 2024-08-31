@@ -1,6 +1,6 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import logo from '../path_to_logo/logo.png'; // Adjust the path according to your project structure
+import logo from '../Auth/East-west-university-LogoSVG.svg.png';
 
 export const generatePDFAdvisingSlip = async () => {
     const input = document.getElementById('pdf-content');
