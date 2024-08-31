@@ -14,6 +14,7 @@ exports.enrollCourse = catchAsyncError(async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(courseId)) {
         return next(new ErrorHandler('Invalid courseId ObjectId', 400));
     }
+
     try {
         const studentId = req.user._id;
         const student = await Student.findById(studentId);
@@ -23,50 +24,52 @@ exports.enrollCourse = catchAsyncError(async (req, res, next) => {
         if (!lastSemester) {
             return next(new ErrorHandler('No semester found', 404));
         }
+
         const departmentOfferCourses = await OfferCourseDetails.findOne({
             semester: lastSemester._id,
             department: student.department,
+        });
 
-        })
         if (!departmentOfferCourses) {
             return next(new ErrorHandler('No courses offered for the student’s department', 404));
         }
-        const courseExists = departmentOfferCourses.courses.includes(courseId);
+
+        const courseExists = departmentOfferCourses.courses.some(course => course._id.equals(courseId));
         if (!courseExists) {
             return next(new ErrorHandler('Course not found in offered courses', 404));
         }
-        let enrollment;
-        const existingEnrollment = await CourseEnroll.findOne({ student: student._id })
-        if (existingEnrollment) {
-            if (existingEnrollment.semester && existingEnrollment.semester.equals(lastSemester._id)) {
-                if (existingEnrollment.enrollCourses.some(enrolledCourse => enrolledCourse.course.equals(courseId))) {
-                    return next(new ErrorHandler('Course already enrolled', 400));
-                }
-                else {
-                    existingEnrollment.enrollCourses.push({ course: courseId });
-                    enrollment = await existingEnrollment.save();
 
-                }
+        // Find or create enrollment
+        let enrollment = await CourseEnroll.findOne({ student: studentId, semester: lastSemester._id });
+        if (enrollment) {
+            const courseAlreadyEnrolled = enrollment.enrollCourses.some(enrolledCourse => enrolledCourse.course.equals(courseId));
+            if (courseAlreadyEnrolled) {
+                return next(new ErrorHandler('Course already enrolled', 400));
             }
+            enrollment.enrollCourses.push({ course: courseId });
+        } else {
+            enrollment = new CourseEnroll({
+                student: studentId,
+                semester: lastSemester._id,
+                enrollCourses: [{ course: courseId }]
+            });
         }
-        enrollment = new CourseEnroll({
-            student: studentId,
-            semester: lastSemester._id,
-            enrollCourses: [{ course: courseId }]
-        });
+
         await enrollment.save();
+
+        // Populate and return updated enrollment
         enrollment = await CourseEnroll.findById(enrollment._id).populate('enrollCourses.course');
 
         return res.status(200).json({
             success: true,
             enrollCourse: enrollment
         });
+
     } catch (error) {
-        return next(new ErrorHandler('Internal Server Error', 500))
+        return next(new ErrorHandler('Internal Server Error', 500));
     }
-
-
 });
+
 
 // Get OfferCourses by advising
 exports.getOfferCoursesByAdvising = catchAsyncError(async (req, res, next) => {
