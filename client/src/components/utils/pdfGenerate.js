@@ -1,6 +1,6 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import logo from '../Auth/East-west-university-LogoSVG.svg.png';
+import logo from '../Auth/East-west-university-LogoSVG.svg.png'; // Adjust the path as needed
 
 export const generatePDFAdvisingSlip = async () => {
     const input = document.getElementById('pdf-content');
@@ -11,29 +11,29 @@ export const generatePDFAdvisingSlip = async () => {
 
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
-        const imgWidth = canvas.width * 0.264583; // Convert px to mm (1px = 0.264583mm)
+        const imgWidth = canvas.width * 0.264583; // Convert px to mm
         const imgHeight = canvas.height * 0.264583;
-
-        // Positioning the content image
         const xPos = (pdfWidth - imgWidth) / 2;
         const yPos = (pdfHeight - imgHeight) / 2;
-
-        // Add Logo
+     
         const logoImg = new Image();
         logoImg.src = logo;
 
         logoImg.onload = () => {
-            // Adding logo to PDF
-            const logoWidth = 50; // Width of the logo in mm
+           
+            const logoWidth = 40; // Adjust width in mm
             const logoHeight = (logoImg.height / logoImg.width) * logoWidth;
-            const logoX = pdfWidth - logoWidth - 10; // 10mm margin from the right
-            const logoY = 10; // 10mm margin from the top
+            const logoX = pdfWidth - logoWidth - 10; 
+            const logoY = 10;
+            // Adding the logo to the PDF
             pdf.addImage(logoImg, 'PNG', logoX, logoY, logoWidth, logoHeight);
-            pdf.setFontSize(12);
-            pdf.text('Your text goes here', xPos, yPos - 10); // Adjust text position if needed
+            
+            // Add content image
             pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight);
             
-            // Save the PDF
+            pdf.setFontSize(14); 
+            pdf.text('Your customized text here', 10, pdfHeight - 10);
+
             pdf.save('student-list.pdf');
         };
     } else {
