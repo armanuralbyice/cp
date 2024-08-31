@@ -156,9 +156,10 @@ const Advising = ({ isSidebarClosed }) => {
             <td>{enrollCourse?.course?.classRoom ? `${enrollCourse.course.classRoom.building}-${enrollCourse.course.classRoom.classroomNo}` : 'N/A'}</td>
             <td>{enrollCourse?.course?.labTime || 'N/A'}</td>
             <td>{enrollCourse?.course?.labRoom ? `${enrollCourse.course.labRoom.building}-${enrollCourse.course.labRoom.classroomNo}` : 'N/A'}</td>
-            <td style={{ fontSize: '20px', justifyContent: 'space-around' }}>
-                <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(enrollCourse?.course?._id)} />
+            <td className="action-column" style={{ fontSize: '20px', justifyContent: 'space-around' }}>
+              <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(enrollCourse?.course?._id)} />
             </td>
+
         </tr>
     ))}
 </tbody>
