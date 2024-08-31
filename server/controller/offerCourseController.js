@@ -9,7 +9,6 @@ exports.offerCourse = catchAsyncError(async (req, res, next) => {
     const { semester, department, courses } = req.body;
 
     try {
-        // Check if semester exists
         const semesterExists = await Semester.findById(semester);
         if (!semesterExists) {
             return next(new ErrorHandler('No such semester found', 404));
@@ -23,15 +22,13 @@ exports.offerCourse = catchAsyncError(async (req, res, next) => {
         const skippedCourses = [];
 
         for (let courseData of courses) {
-            // Check if a course with the same section already exists
             const existingCourse = await OfferCourse.findOne({
-                department,
-                semester,
+                facultyName: courseData.facultyName, // Check facultyName too
+                courseName: courseData.courseName,
                 section: courseData.section
             });
 
             if (!existingCourse) {
-                // If no existing course found, create and save the offer course
                 const newOfferCourse = new OfferCourse({
                     ...courseData,
                     semester,
@@ -43,20 +40,24 @@ exports.offerCourse = catchAsyncError(async (req, res, next) => {
                 savedOfferCourses.push(existingCourse);
             }
         }
-        const savedOfferCourseIds = savedOfferCourses.map(course => course._id);
+
         let offerCourseDetails = await OfferCourseDetails.findOne({ department, semester });
 
         if (!offerCourseDetails) {
             offerCourseDetails = new OfferCourseDetails({
                 semester,
                 department,
-                courses: savedOfferCourseIds
+                courses: savedOfferCourses.map(course => course._id)
             });
         } else {
-            offerCourseDetails.courses.push(...savedOfferCourseIds);
+            // Check for existing course IDs to avoid duplication
+            const existingCourseIds = new Set(offerCourseDetails.courses.map(course => course.toString()));
+            const newCourseIds = savedOfferCourses.map(course => course._id.toString());
+            offerCourseDetails.courses = [...existingCourseIds, ...newCourseIds].filter(id => id);
         }
 
         await offerCourseDetails.save();
+
         await Semester.findByIdAndUpdate(
             semester,
             { $addToSet: { offerCourses: offerCourseDetails._id } },
@@ -80,7 +81,6 @@ exports.offerCourse = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler('Internal Server Error', 500));
     }
 });
-
 // get offerCourses By semester and department (Admin Access)
 exports.getOfferCourses = catchAsyncError(async (req, res, next) => {
     const { semesterId, departmentId } = req.query;
