@@ -144,7 +144,7 @@ const Advising = ({ isSidebarClosed }) => {
                                     <th>Class Room</th>
                                     <th>Lab Time</th>
                                     <th>Lab Room</th>
-                                    <th>Action</th>
+                                    <th className="action-column">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
