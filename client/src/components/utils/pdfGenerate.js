@@ -5,8 +5,12 @@ import logo from '../Auth/East-west-university-LogoSVG.svg.png';
 export const generatePDFAdvisingSlip = async () => {
     const input = document.getElementById('pdf-content');
     if (input) {
-        const actionColumn = document.querySelectorAll('#pdf-content .action-column');
-        actionColumn.forEach(col => col.style.display = 'none');
+        // Temporarily remove the "Action" column
+        const actionColumnHeaders = document.querySelectorAll('#pdf-content thead th:last-child');
+        const actionColumnCells = document.querySelectorAll('#pdf-content tbody td:last-child');
+
+        actionColumnHeaders.forEach(header => header.style.display = 'none');
+        actionColumnCells.forEach(cell => cell.style.display = 'none');
 
         try {
             const canvas = await html2canvas(input, { scale: 1 });
@@ -36,7 +40,9 @@ export const generatePDFAdvisingSlip = async () => {
                 pdf.text('Your customized text here', 10, pdfHeight - 10);
                 pdf.save('student-list.pdf');
 
-                actionColumn.forEach(col => col.style.display = '');
+                // Re-add the "Action" column
+                actionColumnHeaders.forEach(header => header.style.display = '');
+                actionColumnCells.forEach(cell => cell.style.display = '');
             };
         } catch (error) {
             console.error('Error generating PDF:', error);
