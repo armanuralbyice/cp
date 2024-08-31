@@ -114,24 +114,18 @@ const Advising = ({ isSidebarClosed }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {courseDetails.length > 0 ? (
-                                    courseDetails.map(course => (
-                                        <tr key={course._id} onClick={(e) => handleAddCourse(e, course._id)} style={{ cursor: 'pointer' }}>
-                                            <td>{course.courseName.courseCode}</td>
-                                            <td>{course.section}</td>
-                                            <td>{course.classTime}</td>
-                                            <td>{`${course.classRoom.building}-${course.classRoom.classroomNo}`}</td>
-                                            <td>{course.labTime}</td>
-                                            <td>{`${course.labRoom.building}-${course.labRoom.classroomNo}`}</td>
-                                            <td>{course.seat}</td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="7">No courses available</td>
-                                    </tr>
-                                )}
-                            </tbody>
+    {courseDetails.map(course => (
+        <tr key={course._id} onClick={(e) => handleAddCourse(e, course._id)} style={{ cursor: 'pointer' }}>
+            <td>{course?.courseName?.courseCode || 'N/A'}</td>
+            <td>{course?.section || 'N/A'}</td>
+            <td>{course?.classTime || 'N/A'}</td>
+            <td>{course?.classRoom ? `${course.classRoom.building}-${course.classRoom.classroomNo}` : 'N/A'}</td>
+            <td>{course?.labTime || 'N/A'}</td>
+            <td>{course?.labRoom ? `${course.labRoom.building}-${course.labRoom.classroomNo}` : 'N/A'}</td>
+            <td>{course?.seat || 'N/A'}</td>
+        </tr>
+    ))}
+</tbody>
                         </table>
                     </div>
                 </div>
@@ -154,26 +148,20 @@ const Advising = ({ isSidebarClosed }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {enrollCourses.length > 0 ? (
-                                    enrollCourses.map(enrollCourse => (
-                                        <tr key={enrollCourse._id}>
-                                            <td>{enrollCourse.course.courseName.courseCode}</td>
-                                            <td>{enrollCourse.course.section}</td>
-                                            <td>{enrollCourse.course.classTime}</td>
-                                            <td>{`${enrollCourse.course.classRoom.building}-${enrollCourse.course.classRoom.classroomNo}`}</td>
-                                            <td>{enrollCourse.course.labTime}</td>
-                                            <td>{`${enrollCourse.course.labRoom.building}-${enrollCourse.course.labRoom.classroomNo}`}</td>
-                                            <td style={{ fontSize: '20px', justifyContent: 'space-around' }}>
-                                                <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(enrollCourse.course._id)} />
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="7">No enrolled courses</td>
-                                    </tr>
-                                )}
-                            </tbody>
+    {enrollCourses.map(enrollCourse => (
+        <tr key={enrollCourse._id}>
+            <td>{enrollCourse?.course?.courseName?.courseCode || 'N/A'}</td>
+            <td>{enrollCourse?.course?.section || 'N/A'}</td>
+            <td>{enrollCourse?.course?.classTime || 'N/A'}</td>
+            <td>{enrollCourse?.course?.classRoom ? `${enrollCourse.course.classRoom.building}-${enrollCourse.course.classRoom.classroomNo}` : 'N/A'}</td>
+            <td>{enrollCourse?.course?.labTime || 'N/A'}</td>
+            <td>{enrollCourse?.course?.labRoom ? `${enrollCourse.course.labRoom.building}-${enrollCourse.course.labRoom.classroomNo}` : 'N/A'}</td>
+            <td style={{ fontSize: '20px', justifyContent: 'space-around' }}>
+                <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(enrollCourse?.course?._id)} />
+            </td>
+        </tr>
+    ))}
+</tbody>
                         </table>
                     </div>
                 </div>
